@@ -1,5 +1,9 @@
-PROJECT TITLE: CROWD_SOURCED RESOURCE ALLOCATION TOOL
+PROJECT TITLE: 
+
+CROWD_SOURCED RESOURCE ALLOCATION TOOL
+
 PROJECT OVERVIEW:
+
 The Crowd-Sourced Lab Equipment Allocation System is a web-based application built to manage the fair and transparent distribution of limited laboratory equipment in a college environment.
 
 In many academic institutions, multiple students often request the same lab equipment at the same time. This usually leads to conflicts, delays, or manual decision-making that may not always be fair. This project aims to solve that problem by introducing a community-driven approach to prioritizing resource requests.
@@ -13,21 +17,37 @@ The admin (lab in-charge)uses this ranked list to allocate available equipment e
 By blending student input, community feedback, and algorithm-based ranking, the system reduces bias, improves fairness, and provides a practical digital solution for managing lab resources in an academic setting.
 
 PROJECT FLOW:
+
 Student submits request
+
         |
+
 Request stored as pending
+
         |
+
 Community votes
+
         |
+
 Final score calculated
+
         |
+
 Requests ranked
+
         |
+
 Admin allocates resources
 
 TECH STACK:
+
 Frontend: React
+
 Backend: Node.js + Express
+
 Database: MongoDB Atlas
+
 Auth: JWT
+
 Version control: Git + GitHub
