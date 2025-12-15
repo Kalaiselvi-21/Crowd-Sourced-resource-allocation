@@ -28,7 +28,7 @@ PROJECT FLOW:
 
 5. Requests ranked
 
-Admin allocates resources
+6. Admin allocates resources
 
 TECH STACK:
 
