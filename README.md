@@ -18,25 +18,15 @@ By blending student input, community feedback, and algorithm-based ranking, the 
 
 PROJECT FLOW:
 
-Student submits request
+1. Student submits request
 
-        |
+2. Request stored as pending
 
-Request stored as pending
+3. Community votes
 
-        |
+4. Final score calculated
 
-Community votes
-
-        |
-
-Final score calculated
-
-        |
-
-Requests ranked
-
-        |
+5. Requests ranked
 
 Admin allocates resources
 
