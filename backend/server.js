@@ -13,3 +13,12 @@ app.listen(PORT, () => {
 });
 const authRoutes = require("./routes/auth");
 app.use("/api/auth", authRoutes);
+const testRoutes = require("./routes/test");
+app.use("/api/test", testRoutes);
+const requestRoutes = require("./routes/requests");
+app.use("/api/requests", requestRoutes);
+const rankingRoutes = require("./routes/ranking");
+app.use("/api/ranking", rankingRoutes);
+const adminRoutes = require("./routes/admin");
+app.use("/api/admin", adminRoutes);
+

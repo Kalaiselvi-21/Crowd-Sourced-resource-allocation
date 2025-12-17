@@ -1,9 +1,13 @@
 const express = require("express");
 const { protect } = require("../middleware/authMiddleware");
-const { getRankedRequests } = require("../controllers/rankingController");
 
 const router = express.Router();
 
-router.get("/", protect, getRankedRequests);
+router.get("/protected", protect, (req, res) => {
+  res.json({
+    message: "Access granted",
+    user: req.user,
+  });
+});
 
 module.exports = router;

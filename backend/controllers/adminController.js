@@ -1,18 +1,17 @@
 const Request = require("../models/request");
-exports.voteRequest = async (req, res) => {
+
+exports.allocateResource = async (req, res) => {
   try {
-    const { vote } = req.body; // +1 or -1
     const request = await Request.findById(req.params.id);
 
     if (!request) {
       return res.status(404).json({ message: "Request not found" });
     }
 
-    request.votes += vote;
-    request.finalScore = request.urgency * 2 + request.votes;
-
+    request.status = "approved";
     await request.save();
-    res.json(request);
+
+    res.json({ message: "Resource allocated", request });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
