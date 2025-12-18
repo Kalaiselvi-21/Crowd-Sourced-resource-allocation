@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Register</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <h2>Register</h2>
+
+    <form id="registerForm">
+      <input type="text" id="name" placeholder="Name" required /><br /><br />
+      <input type="email" id="email" placeholder="Email" required /><br /><br />
+      <input type="password" id="password" placeholder="Password" required /><br /><br />
+
+      <!-- Role selection -->
+      <label>Role:</label>
+      <select id="role" required>
+        <option value="student" selected>Student</option>
+        <option value="admin">Admin</option>
+      </select><br /><br />
+
+      <button type="submit">Register</button>
+    </form>
+
+    <p>
+      Already have an account?
+      <a href="login.html">Login</a>
+    </p>
+
+    <script src="js/api.js"></script>
+    <script>
+      // Handle form submission
+      document.getElementById("registerForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const role = document.getElementById("role").value;
+
+        if (!name || !email || !password || !role) {
+          alert("Please fill all fields");
+          return;
+        }
+
+        try {
+          const data = await apiRequest("/auth/register", "POST", {
+            name,
+            email,
+            password,
+            role
+          });
+
+          if (data.message) {
+            alert("Registration successful");
+            window.location.href = "login.html";
+          } else {
+            alert("Registration failed");
+          }
+        } catch (err) {
+          console.error(err);
+          alert(err.message || "Server error");
+        }
+      });
+    </script>
+  </body>
+</html>

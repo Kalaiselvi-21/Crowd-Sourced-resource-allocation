@@ -17,13 +17,13 @@ exports.register = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      role,
+      role
     });
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
     console.error("REGISTER ERROR 👉", error);
     res.status(500).json({
-      message: "Server error",
+      message: "Registration failed",
       error: error.message,
     });
   }
@@ -34,7 +34,9 @@ const jwt = require("jsonwebtoken");
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-
+     if (!email || !password) {
+    return res.status(400).json({ message: "Email and password required" });
+  }
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
@@ -51,7 +53,11 @@ exports.login = async (req, res) => {
       { expiresIn: "1d" }
     );
 
-    res.json({ token });
+    res.json({
+  token,
+  role: user.role
+});
+
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }

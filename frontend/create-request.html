@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Create Request</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <h2>Create Resource Request</h2>
+
+    <!-- Resource Dropdown -->
+    <label>Resource:</label>
+    <select id="resourceSelect" required></select
+    ><br /><br />
+
+    <!-- Quantity -->
+    <input
+      type="number"
+      id="quantity"
+      placeholder="Quantity"
+      required
+    /><br /><br />
+
+    <!-- Urgency -->
+    <input
+      type="number"
+      id="urgency"
+      placeholder="Urgency [1-5]"
+      min="1"
+      max="5"
+      required
+    /><br /><br />
+
+    <!-- Justification -->
+    <textarea
+      id="justification"
+      placeholder="Reason for request"
+      required
+    ></textarea
+    ><br /><br />
+
+    <!-- Buttons -->
+    <button onclick="createRequest()">Submit Request</button><br /><br />
+    <button onclick="goBack()">Back to Dashboard</button>
+
+    <script src="js/api.js"></script>
+    <script>
+      // Protect page
+      if (!localStorage.getItem("token")) {
+        window.location.href = "login.html";
+      }
+
+      // Load available resources into dropdown
+      async function loadResources() {
+        try {
+          const resources = await apiRequest("/resources"); // fetch available resources
+          const select = document.getElementById("resourceSelect");
+          select.innerHTML = "";
+
+          if (!resources || resources.length === 0) {
+            select.style.display = "none";
+            alert("No resources available currently");
+            return;
+          }
+
+          resources.forEach((r) => {
+            const option = document.createElement("option");
+            option.value = r.resourceName;
+            option.textContent = `${r.resourceName} (Available: ${r.availableQuantity})`;
+            select.appendChild(option);
+          });
+        } catch (error) {
+          console.error(error);
+          alert("Failed to load resources");
+        }
+      }
+
+      // Call on page load
+      loadResources();
+
+      // Create Request
+      async function createRequest() {
+        const resourceName = document.getElementById("resourceSelect").value;
+        const quantity = parseInt(document.getElementById("quantity").value);
+        const urgency = parseInt(document.getElementById("urgency").value);
+        const justification = document.getElementById("justification").value;
+
+        if (!resourceName || !quantity || !urgency || !justification) {
+          alert("Please fill all fields");
+          return;
+        }
+
+        try {
+          const data = await apiRequest("/requests", "POST", {
+            resourceName,
+            quantity,
+            urgency,
+            justification,
+          });
+
+          if (data) {
+            alert("Request submitted successfully");
+            window.location.href = "dashboard.html";
+          } else {
+            alert("Failed to submit request");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Server error");
+        }
+      }
+
+      function goBack() {
+        window.location.href = "dashboard.html";
+      }
+    </script>
+  </body>
+</html>

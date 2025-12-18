@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Resource Requests</title>
+  </head>
+  <body>
+    <h2>Create Resource Request</h2>
+
+    <form id="requestForm">
+      <label>Resource:</label>
+      <select id="resourceSelect"></select
+      ><br /><br />
+
+      <label>Quantity:</label>
+      <input type="number" id="quantity" required /><br /><br />
+
+      <label>Urgency (1-5):</label>
+      <input type="number" id="urgency" min="1" max="5" required /><br /><br />
+
+      <label>Justification:</label>
+      <textarea id="justification" required></textarea><br /><br />
+
+      <button type="submit">Submit Request</button>
+    </form>
+
+    <h2>All Resource Requests</h2>
+    <div id="requestList"></div>
+
+    <br />
+    <button onclick="goBack()">Back to Dashboard</button>
+
+    <script src="js/api.js"></script>
+    <script>
+      // Protect page
+      if (!localStorage.getItem("token")) {
+        window.location.href = "login.html";
+      }
+
+      // Load available resources
+      async function loadResources() {
+        const resources = await apiRequest("/resources");
+        const select = document.getElementById("resourceSelect");
+        select.innerHTML = "";
+
+        if (!resources || resources.length === 0) {
+          select.style.display = "none";
+          return;
+        }
+
+        resources.forEach((r) => {
+          const option = document.createElement("option");
+          option.value = r.resourceName;
+          option.textContent = `${r.resourceName} (Available: ${r.availableQuantity})`;
+          select.appendChild(option);
+        });
+      }
+
+      loadResources();
+
+      // Submit new request
+      document
+        .getElementById("requestForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const resourceName = document.getElementById("resourceSelect").value;
+          const quantity = parseInt(document.getElementById("quantity").value);
+          const urgency = parseInt(document.getElementById("urgency").value);
+          const justification = document.getElementById("justification").value;
+
+          const res = await apiRequest("/requests", "POST", {
+            resourceName,
+            quantity,
+            urgency,
+            justification,
+          });
+
+          alert("Request submitted");
+          loadResources();
+          loadRequests();
+        });
+
+      // Load all requests
+      async function loadRequests() {
+        try {
+          const requests = await apiRequest("/requests");
+          const container = document.getElementById("requestList");
+          container.innerHTML = "";
+
+          if (!requests || requests.length === 0) {
+            container.innerHTML = "<p>No requests found</p>";
+            return;
+          }
+
+          requests.forEach((req) => {
+            const div = document.createElement("div");
+            div.style.border = "1px solid #ccc";
+            div.style.padding = "10px";
+            div.style.marginBottom = "10px";
+
+            const status = (req.status || "").toLowerCase();
+            let voteBtn = "";
+            if (status === "pending") {
+              voteBtn = `<button onclick="voteRequest('${req._id}')">👍 Vote</button>`;
+            } else {
+              voteBtn = `<strong>Status: ${req.status}</strong>`;
+            }
+
+            div.innerHTML = `
+              <strong>Resource:</strong> ${req.resourceName}<br>
+              <strong>Quantity:</strong> ${req.quantity}<br>
+              <strong>Urgency:</strong> ${req.urgency}<br>
+              <strong>Justification:</strong> ${req.justification}<br>
+              <strong>Votes:</strong> ${req.votes}<br>
+              ${voteBtn}
+            `;
+
+            container.appendChild(div);
+          });
+        } catch (error) {
+          console.error(error);
+          alert("Failed to load requests");
+        }
+      }
+
+      // Vote a request
+      async function voteRequest(id) {
+        try {
+          await apiRequest(`/requests/${id}/vote`, "PUT", { vote: 1 });
+          alert("Vote submitted");
+          loadRequests();
+        } catch (error) {
+          console.error(error);
+          alert(error.message || "Voting failed");
+        }
+      }
+
+      function goBack() {
+        window.location.href = "dashboard.html";
+      }
+
+      loadRequests();
+    </script>
+  </body>
+</html>

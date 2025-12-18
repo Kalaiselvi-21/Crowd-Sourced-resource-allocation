@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <h2>Dashboard</h2>
+
+    <button onclick="go('create-request.html')">Create Request</button
+    ><br /><br />
+    <button onclick="go('requests.html')">View & Vote Requests</button
+    ><br /><br />
+    <button onclick="go('ranking.html')">View Ranking</button><br /><br />
+    <button onclick="go('admin.html')">Admin Panel</button><br /><br />
+
+    <button onclick="logout()">Logout</button>
+
+    <script>
+      // Protect route
+      if (!localStorage.getItem("token")) {
+        window.location.href = "login.html";
+      }
+
+      function go(page) {
+        window.location.href = page;
+      }
+
+      function logout() {
+        localStorage.removeItem("token");
+        window.location.href = "login.html";
+      }
+    </script>
+  </body>
+</html>

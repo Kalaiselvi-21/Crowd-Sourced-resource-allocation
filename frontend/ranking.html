@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Request Ranking</title>
+</head>
+<body>
+
+  <h2>Resource Request Ranking</h2>
+
+  <table border="1" cellpadding="10">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Resource</th>
+        <th>Quantity</th>
+        <th>Urgency</th>
+        <th>Votes</th>
+        <th>Final Score</th>
+      </tr>
+    </thead>
+    <tbody id="rankingBody"></tbody>
+  </table>
+
+  <br>
+  <button onclick="goBack()">Back to Dashboard</button>
+
+  <script src="js/api.js"></script>
+  <script>
+    // Protect page
+    if (!localStorage.getItem("token")) {
+      window.location.href = "login.html";
+    }
+
+    async function loadRanking() {
+      try {
+        const data = await apiRequest("/requests/ranking");
+
+        const tbody = document.getElementById("rankingBody");
+        tbody.innerHTML = "";
+
+        if (!data || data.length === 0) {
+          tbody.innerHTML = "<tr><td colspan='6'>No data</td></tr>";
+          return;
+        }
+
+        data.forEach((req, index) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${req.resourceName}</td>
+            <td>${req.quantity}</td>
+            <td>${req.urgency}</td>
+            <td>${req.votes}</td>
+            <td>${req.finalScore}</td>
+          `;
+          tbody.appendChild(row);
+        });
+
+      } catch (err) {
+        console.error(err);
+        alert("Failed to load ranking");
+      }
+    }
+
+    function goBack() {
+      window.location.href = "dashboard.html";
+    }
+
+    loadRanking();
+  </script>
+
+</body>
+</html>
