@@ -1,4 +1,4 @@
-PROJECT TITLE: 
+PROJECT TITLE:
 
 CROWD_SOURCED RESOURCE ALLOCATION TOOL
 
@@ -41,12 +41,15 @@ Database: MongoDB Atlas
 Auth: JWT
 
 Version control: Git + GitHub
-![Student Register] (Screenshots\Student%20Register.png)
-![Student Login] (Screenshots\Student%20Login.png)
-![Student Dashboard] (Screenshots\Student%20Dashboard.png)
-![Admin Dashboard] (Screenshots\Admin%20Dashboard.png)
-![Admin Register] (Screenshots\Admin%20Register.png)
-![Resource Allocation] (Screenshots\Resource%20Allocation.png)
-![Ranking ] (Screenshots\Ranking.png)
-![Resource Requests] (Screenshots\Resource%20request.png)
-![Vote ] (Screenshots\Vote.png)
+
+SCREENSHOTS
+
+![Student Register](Screenshots/Student%20Register.png)
+![Student Login](Screenshots/Student%20Login.png)
+![Student Dashboard](Screenshots/Student%20Dashboard.png)
+![Admin Dashboard](Screenshots/Admin%20Dashboard.png)
+![Admin Register](Screenshots/Admin%20Register.png)
+![Resource Allocation](Screenshots/Resource%20Allocation.png)
+![Ranking](Screenshots/Ranking.png)
+![Resource Requests](Screenshots/Resource%20request.png)
+![Vote](Screenshots/Vote.png)
