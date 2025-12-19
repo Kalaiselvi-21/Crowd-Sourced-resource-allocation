@@ -49,11 +49,9 @@
       if (!localStorage.getItem("token")) {
         window.location.href = "login.html";
       }
-
-      // Load available resources into dropdown
       async function loadResources() {
         try {
-          const resources = await apiRequest("/resources"); // fetch available resources
+          const resources = await apiRequest("/resources"); 
           const select = document.getElementById("resourceSelect");
           select.innerHTML = "";
 
@@ -74,11 +72,7 @@
           alert("Failed to load resources");
         }
       }
-
-      // Call on page load
       loadResources();
-
-      // Create Request
       async function createRequest() {
         const resourceName = document.getElementById("resourceSelect").value;
         const quantity = parseInt(document.getElementById("quantity").value);

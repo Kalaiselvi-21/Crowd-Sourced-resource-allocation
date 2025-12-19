@@ -21,7 +21,6 @@
         window.location.href = "login.html";
       }
 
-      // Load all requests
       async function loadRequests() {
         try {
           const requests = await apiRequest("/requests");
@@ -73,7 +72,7 @@
           loadRequests();
         } catch (error) {
           console.error(error);
-          alert("Voting failed");
+          alert("You already voted");
         }
       }
 

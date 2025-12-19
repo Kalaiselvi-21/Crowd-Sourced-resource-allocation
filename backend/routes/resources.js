@@ -4,7 +4,7 @@ const { protect, adminOnly } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.post("/", protect, adminOnly, createResource);   // Admin only
-router.get("/", protect, getAvailableResources);     // All users
+router.post("/", protect, adminOnly, createResource);  
+router.get("/", protect, getAvailableResources);     
 
 module.exports = router;

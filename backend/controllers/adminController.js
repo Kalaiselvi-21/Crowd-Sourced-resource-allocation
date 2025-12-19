@@ -24,8 +24,6 @@ exports.allocateResource = async (req, res) => {
       await request.save();
       return res.json({ message: "Insufficient resources. Request rejected." });
     }
-
-    // Allocate
     resource.availableQuantity -= request.quantity;
     request.status = "Approved";
     request.allocatedAt = new Date();

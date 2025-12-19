@@ -9,7 +9,6 @@ exports.voteRequest = async (req, res) => {
       return res.status(404).json({ message: "Request not found" });
     }
 
-    // 🔥 SAFETY CHECK
     if (typeof request.votes !== "number") {
       request.votes = 0;
     }
