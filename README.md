@@ -41,3 +41,4 @@ Database: MongoDB Atlas
 Auth: JWT
 
 Version control: Git + GitHub
+![Student Register] (C:\Users\HP\OneDrive\Desktop\CrowdSourcedTool\Crowd-Sourced-resource-allocation\Screenshots\Student Register.png)
