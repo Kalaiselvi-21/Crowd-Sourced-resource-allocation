@@ -12,7 +12,9 @@ exports.allocateResource = async (req, res) => {
       return res.status(400).json({ message: "Request already processed" });
     }
 
-    const resource = await Resource.findOne({ name: request.resourceName });
+    const resource = await Resource.findOne({
+      resourceName: request.resourceName,
+    });
     if (!resource) {
       return res.status(404).json({ message: "Resource not found" });
     }
@@ -33,6 +35,10 @@ exports.allocateResource = async (req, res) => {
 
     res.json({ message: "Resource allocated successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    console.error("ALLOCATE ERROR:", error);
+    res.status(500).json({
+      message: error.message,
+      stack: error.stack,
+    });
   }
 };

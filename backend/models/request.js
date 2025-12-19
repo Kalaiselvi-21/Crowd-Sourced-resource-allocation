@@ -11,7 +11,7 @@ const requestSchema = new mongoose.Schema(
     finalScore: { type: Number, default: 0 },
     status: {
       type: String,
-      enum: ["Pending", "approved", "rejected"],
+      enum: ["Pending", "Approved", "rejected"],
       default: "Pending",
     },
     requestedBy: {

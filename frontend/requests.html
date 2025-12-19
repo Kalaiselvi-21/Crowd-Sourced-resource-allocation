@@ -2,29 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Resource Requests</title>
+    <title>View & Vote Requests</title>
+    <link rel="stylesheet" href="css/style.css" />
   </head>
+
   <body>
-    <h2>Create Resource Request</h2>
-
-    <form id="requestForm">
-      <label>Resource:</label>
-      <select id="resourceSelect"></select
-      ><br /><br />
-
-      <label>Quantity:</label>
-      <input type="number" id="quantity" required /><br /><br />
-
-      <label>Urgency (1-5):</label>
-      <input type="number" id="urgency" min="1" max="5" required /><br /><br />
-
-      <label>Justification:</label>
-      <textarea id="justification" required></textarea><br /><br />
-
-      <button type="submit">Submit Request</button>
-    </form>
-
     <h2>All Resource Requests</h2>
+
     <div id="requestList"></div>
 
     <br />
@@ -36,49 +20,6 @@
       if (!localStorage.getItem("token")) {
         window.location.href = "login.html";
       }
-
-      // Load available resources
-      async function loadResources() {
-        const resources = await apiRequest("/resources");
-        const select = document.getElementById("resourceSelect");
-        select.innerHTML = "";
-
-        if (!resources || resources.length === 0) {
-          select.style.display = "none";
-          return;
-        }
-
-        resources.forEach((r) => {
-          const option = document.createElement("option");
-          option.value = r.resourceName;
-          option.textContent = `${r.resourceName} (Available: ${r.availableQuantity})`;
-          select.appendChild(option);
-        });
-      }
-
-      loadResources();
-
-      // Submit new request
-      document
-        .getElementById("requestForm")
-        .addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const resourceName = document.getElementById("resourceSelect").value;
-          const quantity = parseInt(document.getElementById("quantity").value);
-          const urgency = parseInt(document.getElementById("urgency").value);
-          const justification = document.getElementById("justification").value;
-
-          const res = await apiRequest("/requests", "POST", {
-            resourceName,
-            quantity,
-            urgency,
-            justification,
-          });
-
-          alert("Request submitted");
-          loadResources();
-          loadRequests();
-        });
 
       // Load all requests
       async function loadRequests() {
@@ -98,8 +39,9 @@
             div.style.padding = "10px";
             div.style.marginBottom = "10px";
 
-            const status = (req.status || "").toLowerCase();
+            const status = (req.status || "Pending").toLowerCase();
             let voteBtn = "";
+
             if (status === "pending") {
               voteBtn = `<button onclick="voteRequest('${req._id}')">👍 Vote</button>`;
             } else {
@@ -111,7 +53,7 @@
               <strong>Quantity:</strong> ${req.quantity}<br>
               <strong>Urgency:</strong> ${req.urgency}<br>
               <strong>Justification:</strong> ${req.justification}<br>
-              <strong>Votes:</strong> ${req.votes}<br>
+              <strong>Votes:</strong> ${req.votes || 0}<br><br>
               ${voteBtn}
             `;
 
@@ -131,7 +73,7 @@
           loadRequests();
         } catch (error) {
           console.error(error);
-          alert(error.message || "Voting failed");
+          alert("Voting failed");
         }
       }
 

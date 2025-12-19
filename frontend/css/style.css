@@ -1,0 +1,148 @@
+/* === General Styles === */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f4f8;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+  color: #1a73e8;
+  margin-bottom: 30px;
+}
+
+/* === Inputs / Selects / Textareas Shorter & Centered === */
+input,
+select,
+textarea {
+  width: 300px; /* fixed disciplined width */
+  max-width: 100%; /* still responsive on small screens */
+  padding: 10px 12px;
+  margin: 6px auto; /* center horizontally */
+  display: block; /* needed for margin auto to work */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #1a73e8;
+  box-shadow: 0 0 5px rgba(26, 115, 232, 0.3);
+}
+
+button {
+  background: linear-gradient(135deg, #1a73e8, #4285f4);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+}
+
+a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.request-card,
+.admin-card,
+#requestList div,
+#adminRequests div {
+  max-width: 600px; /* max width for cards */
+  margin: 12px auto; /* center horizontally */
+  padding: 15px 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.request-card:hover,
+.admin-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+}
+
+#requestList div,
+#adminRequests div {
+  display: flex;
+  flex-direction: column;
+}
+
+#requestList button,
+#adminRequests button {
+  width: fit-content;
+  margin-top: 8px;
+}
+
+/* === Tables === */
+table {
+  width: 90%; /* narrow table */
+  max-width: 800px; /* optional max width */
+  margin: 20px auto; /* center horizontally */
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+  padding: 12px 15px;
+  text-align: center;
+}
+
+th {
+  background: #1a73e8;
+  color: #fff;
+}
+
+tr:nth-child(even) {
+  background: #f2f4f8;
+}
+
+/* === Forms === */
+form {
+  max-width: 500px;
+  margin: 0 auto 30px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+/* === Buttons Group on Dashboard === */
+button {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 10px auto;
+}
+
+/* === Alerts / Messages === */
+p {
+  text-align: center;
+  color: #555;
+  font-size: 16px;
+}

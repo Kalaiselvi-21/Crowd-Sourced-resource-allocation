@@ -8,19 +8,33 @@
   <body>
     <h2>Dashboard</h2>
 
-    <button onclick="go('create-request.html')">Create Request</button
-    ><br /><br />
-    <button onclick="go('requests.html')">View & Vote Requests</button
-    ><br /><br />
-    <button onclick="go('ranking.html')">View Ranking</button><br /><br />
-    <button onclick="go('admin.html')">Admin Panel</button><br /><br />
-
-    <button onclick="logout()">Logout</button>
+    <div class="dashboard-container">
+      <button onclick="go('create-request.html')">Create Request</button>
+      <button onclick="go('requests.html')">View & Vote Requests</button>
+      <button onclick="go('ranking.html')">View Ranking</button>
+      <button id="adminBtn" onclick="go('admin.html')">Admin Panel</button>
+      <button onclick="logout()">Logout</button>
+    </div>
 
     <script>
       // Protect route
-      if (!localStorage.getItem("token")) {
+      const token = localStorage.getItem("token");
+      if (!token) {
         window.location.href = "login.html";
+      }
+
+      // Decode token to hide admin panel if not admin
+      function parseJwt(token) {
+        try {
+          return JSON.parse(atob(token.split(".")[1]));
+        } catch (e) {
+          return null;
+        }
+      }
+
+      const user = parseJwt(token);
+      if (!user || user.role !== "admin") {
+        document.getElementById("adminBtn").style.display = "none";
       }
 
       function go(page) {
