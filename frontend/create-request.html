@@ -9,7 +9,7 @@
     <h2>Create Resource Request</h2>
 
     <!-- Resource Dropdown -->
-    <label>Resource:</label>
+    <center><label>Resource</label></center>
     <select id="resourceSelect" required></select
     ><br /><br />
 
@@ -51,7 +51,7 @@
       }
       async function loadResources() {
         try {
-          const resources = await apiRequest("/resources"); 
+          const resources = await apiRequest("/resources");
           const select = document.getElementById("resourceSelect");
           select.innerHTML = "";
 
